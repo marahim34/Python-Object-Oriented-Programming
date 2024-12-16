@@ -1,7 +1,7 @@
 #define
 def double_it(num):
     result = num * 2
-    print(result)
+    print('Inside the function', result)
     return result
 
 double_it(12)

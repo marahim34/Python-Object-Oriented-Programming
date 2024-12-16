@@ -24,10 +24,10 @@ print(name)
 def a_lot(num1, num2):
     sum = num1 + num2
     multi = num1 * num2
-    div = num1 / num2
+    div = round(num1 / num2)
 
     # return [sum, multi, div]
     return sum, multi, div
 
 everything = a_lot(20, 10)
-print(everything)
+print(f'Everything, {everything}')
