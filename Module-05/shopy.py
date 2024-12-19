@@ -20,7 +20,7 @@ newBuyer.add_to_cart('Onion')
 print(newBuyer.cart)
 
 
-midBuyer = Shop('Donal Trump')
+midBuyer = Shop('Donald Trump')
 midBuyer.add_to_cart('Toilet Tissue')
 midBuyer.add_to_cart('Hand Soap')
 midBuyer.add_to_cart('Air Freshener')
