@@ -1,0 +1,109 @@
+Multiple Inheritance
+---------------------
+
+What is Multiple Inheritance?
+-----------------------------
+Multiple inheritance is a feature in object-oriented programming where a class 
+can inherit attributes and methods from more than one base class. This allows a 
+derived class to combine and extend functionality from multiple sources.
+
+Structure:
+- Class A: First base class.
+- Class B: Second base class.
+- Class C: Derived class inheriting from both A and B.
+
+Why Use Multiple Inheritance?
+------------------------------
+1. To combine functionalities from multiple base classes.
+2. To design systems where a derived class shares characteristics of multiple parents.
+
+Potential Issues with Multiple Inheritance
+------------------------------------------
+1. **Ambiguity**: When two base classes have methods or attributes with the same name, 
+   the derived class may face ambiguity about which one to use.
+2. **Complexity**: Managing multiple base classes can increase the complexity of the code.
+
+Example: Multiple Inheritance
+------------------------------
+Let’s design a system where:
+1. `Person` represents general attributes of a person.
+2. `Employee` represents employment-specific details.
+3. `Manager` inherits from both `Person` and `Employee`.
+
+Code Example
+------------
+# Base class 1
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def person_info(self):
+        return f"Name: {self.name}, Age: {self.age}"
+
+# Base class 2
+class Employee:
+    def __init__(self, employee_id, department):
+        self.employee_id = employee_id
+        self.department = department
+
+    def employee_info(self):
+        return f"Employee ID: {self.employee_id}, Department: {self.department}"
+
+# Derived class
+class Manager(Person, Employee):
+    def __init__(self, name, age, employee_id, department, team_size):
+        Person.__init__(self, name, age)       # Initialize Person attributes
+        Employee.__init__(self, employee_id, department)  # Initialize Employee attributes
+        self.team_size = team_size
+
+    def manager_info(self):
+        return (f"{self.person_info()}, {self.employee_info()}, "
+                f"Team Size: {self.team_size}")
+
+# Using the classes
+manager = Manager("Alice", 35, "E123", "IT", 10)
+print(manager.manager_info())
+
+Output
+------
+Name: Alice, Age: 35, Employee ID: E123, Department: IT, Team Size: 10
+
+Explanation
+-----------
+1. Base Class `Person`:
+   - Represents general attributes of a person (`name`, `age`).
+   - Provides a method `person_info()`.
+
+2. Base Class `Employee`:
+   - Represents employment-specific details (`employee_id`, `department`).
+   - Provides a method `employee_info()`.
+
+3. Derived Class `Manager`:
+   - Inherits from both `Person` and `Employee`.
+   - Combines attributes and methods from both base classes.
+   - Adds its own attribute `team_size` and method `manager_info()`.
+
+Handling Ambiguity in Multiple Inheritance
+------------------------------------------
+If both base classes have a method with the same name, Python resolves the ambiguity 
+using the **Method Resolution Order (MRO)**, which follows the order of inheritance 
+specified in the class definition.
+
+Example:
+If both `Person` and `Employee` have a method `info()`:
+- The derived class will use the method from the first listed base class (`Person`) 
+  unless explicitly overridden.
+
+Advantages
+----------
+1. Combines functionalities from multiple classes.
+2. Allows the derived class to inherit a variety of behaviors and properties.
+
+Disadvantages
+-------------
+1. Increased complexity due to potential ambiguity.
+2. Harder to debug and maintain if base classes have overlapping functionality.
+
+This example demonstrates how multiple inheritance enables combining behaviors 
+from multiple base classes while highlighting potential challenges and solutions.

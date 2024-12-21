@@ -1,0 +1,26 @@
+- self is always the first parameter of instance methods and refers to the instance being created.
+- The -> None indicates to readers and tools that this method doesn't return anything.
+- Python returns None implicitly from __init__. For the __init__ method, it should always be the same. Using other types like int or str would be misleading.
+- Adding -> None makes it explicit that the method is not intended to return anything.
+- If a method is supposed to return an integer, we use -> int. This is useful when the function performs calculations or operations that result in an integer.
+- If a method is supposed to return a string, we use -> str. This is common for methods that generate or manipulate text.
+- If it returns a list, dictionary, or tuple, we use list, dict, or tuple, respectively.
+- For multiple types, use Union: If a method can return more than one type, use Union from the typing module. For example:
+
+from typing import Union
+
+class Example:
+    def get_value(self, flag: bool) -> Union[int, str]:
+        return 42 if flag else "default value"
+
+
++------------------------------------+----------------------+
+| Method Functionality               | Return Type Hint     |
++------------------------------------+----------------------+
+| Adds or calculates something       | -> int, -> float     |
+| Returns a name or message          | -> str               |
+| Retrieves a collection of items    | -> list, -> dict     |
+| Performs an action (no return)     | -> None              |
++------------------------------------+----------------------+
+
+

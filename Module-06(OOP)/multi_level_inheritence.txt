@@ -1,0 +1,91 @@
+Multi-Level Inheritance
+------------------------
+
+What is Multi-Level Inheritance?
+---------------------------------
+In multi-level inheritance, a class inherits from a derived class, forming a chain. 
+The derived class itself acts as a base class for another class. 
+This allows a class to inherit attributes and methods from multiple levels of hierarchy.
+
+Structure:
+- Base Class: The top-level class with general functionality.
+- Intermediate Class: Inherits from the base class and adds more specific functionality.
+- Derived Class: Inherits from the intermediate class and adds its own specialized behavior.
+
+Why Use Multi-Level Inheritance?
+---------------------------------
+1. To reuse and extend functionality across multiple levels.
+2. To establish a hierarchy for complex systems.
+
+Example: Multi-Level Inheritance
+---------------------------------
+Let’s design a system representing vehicles, where:
+1. `Vehicle` is the base class.
+2. `Car` inherits from `Vehicle`.
+3. `ElectricCar` inherits from `Car`.
+
+Code Example
+------------
+# Base class
+class Vehicle:
+    def __init__(self, brand, model):
+        self.brand = brand
+        self.model = model
+
+    def info(self):
+        return f"Vehicle: {self.brand} {self.model}"
+
+# Intermediate class
+class Car(Vehicle):
+    def __init__(self, brand, model, doors):
+        super().__init__(brand, model)  # Call the base class constructor
+        self.doors = doors
+
+    def car_info(self):
+        return f"Car: {self.brand} {self.model}, Doors: {self.doors}"
+
+# Derived class
+class ElectricCar(Car):
+    def __init__(self, brand, model, doors, battery_capacity):
+        super().__init__(brand, model, doors)  # Call the intermediate class constructor
+        self.battery_capacity = battery_capacity
+
+    def electric_car_info(self):
+        return f"Electric Car: {self.brand} {self.model}, Doors: {self.doors}, Battery: {self.battery_capacity} kWh"
+
+# Using the classes
+vehicle = Vehicle("Generic", "Model X")
+print(vehicle.info())
+
+car = Car("Toyota", "Camry", 4)
+print(car.car_info())
+
+electric_car = ElectricCar("Tesla", "Model 3", 4, 75)
+print(electric_car.electric_car_info())
+
+Output
+------
+Vehicle: Generic Model X
+Car: Toyota Camry, Doors: 4
+Electric Car: Tesla Model 3, Doors: 4, Battery: 75 kWh
+
+Explanation
+-----------
+1. Base Class `Vehicle`:
+   - Provides common properties (`brand`, `model`) and a general method `info()`.
+
+2. Intermediate Class `Car`:
+   - Inherits from `Vehicle` and adds a new property `doors` and a method `car_info()`.
+
+3. Derived Class `ElectricCar`:
+   - Inherits from `Car`, which already has properties from `Vehicle`.
+   - Adds a new property `battery_capacity` and a method `electric_car_info()`.
+
+Advantages
+----------
+1. Code Reusability: Each level builds on the functionality of the previous level.
+2. Hierarchical Design: Helps establish clear relationships among classes in complex systems.
+3. Scalability: Allows for further extensions by adding more levels.
+
+This example demonstrates how multi-level inheritance allows for the extension of 
+functionality across multiple levels while maintaining a clear hierarchy.

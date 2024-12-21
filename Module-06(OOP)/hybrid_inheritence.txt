@@ -1,0 +1,118 @@
+Hybrid Inheritance
+-------------------
+
+What is Hybrid Inheritance?
+---------------------------
+Hybrid inheritance is a combination of two or more types of inheritance, such as 
+single, multiple, multilevel, or hierarchical inheritance. It creates a complex 
+inheritance structure to model real-world scenarios where different relationships 
+exist between classes.
+
+Structure:
+- Base Class: The top-level class.
+- Derived Classes: Can inherit from the base class using single, multiple, or multilevel inheritance.
+- Final Derived Class: Combines features from multiple parent classes.
+
+Why Use Hybrid Inheritance?
+---------------------------
+1. To model real-world systems with complex relationships.
+2. To combine the advantages of multiple inheritance types.
+3. To create a more flexible and scalable codebase.
+
+Potential Issues with Hybrid Inheritance
+----------------------------------------
+1. **Ambiguity**: Multiple paths to the same base class can cause ambiguity.
+2. **Complexity**: The inheritance tree can become difficult to manage and debug.
+
+Example: Hybrid Inheritance
+---------------------------
+Let’s design a system for employees, where:
+1. `Person` is the base class.
+2. `Employee` and `Student` inherit from `Person`.
+3. `Intern` inherits from both `Employee` and `Student`.
+
+Code Example
+------------
+# Base class
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def person_info(self):
+        return f"Name: {self.name}, Age: {self.age}"
+
+# Derived class 1
+class Employee(Person):
+    def __init__(self, name, age, employee_id):
+        super().__init__(name, age)  # Call the base class constructor
+        self.employee_id = employee_id
+
+    def employee_info(self):
+        return f"Employee ID: {self.employee_id}"
+
+# Derived class 2
+class Student(Person):
+    def __init__(self, name, age, student_id):
+        super().__init__(name, age)  # Call the base class constructor
+        self.student_id = student_id
+
+    def student_info(self):
+        return f"Student ID: {self.student_id}"
+
+# Final derived class
+class Intern(Employee, Student):
+    def __init__(self, name, age, employee_id, student_id, stipend):
+        Employee.__init__(self, name, age, employee_id)  # Initialize Employee attributes
+        Student.__init__(self, name, age, student_id)    # Initialize Student attributes
+        self.stipend = stipend
+
+    def intern_info(self):
+        return (f"{self.person_info()}, {self.employee_info()}, "
+                f"{self.student_info()}, Stipend: {self.stipend} USD")
+
+# Using the classes
+intern = Intern("Alice", 22, "E123", "S456", 500)
+print(intern.intern_info())
+
+Output
+------
+Name: Alice, Age: 22, Employee ID: E123, Student ID: S456, Stipend: 500 USD
+
+Explanation
+-----------
+1. Base Class `Person`:
+   - Represents general attributes of a person (`name`, `age`).
+   - Provides a method `person_info()`.
+
+2. Derived Class `Employee`:
+   - Inherits from `Person`.
+   - Adds `employee_id` and provides `employee_info()`.
+
+3. Derived Class `Student`:
+   - Inherits from `Person`.
+   - Adds `student_id` and provides `student_info()`.
+
+4. Final Derived Class `Intern`:
+   - Inherits from both `Employee` and `Student`.
+   - Combines attributes from both classes and adds a new attribute `stipend`.
+   - Resolves ambiguity by explicitly initializing `Employee` and `Student`.
+
+Handling Ambiguity in Hybrid Inheritance
+----------------------------------------
+Hybrid inheritance can lead to ambiguity when a method or attribute exists in multiple 
+parent classes. Python resolves this using the **Method Resolution Order (MRO)**, 
+which determines the order of class hierarchy.
+
+Advantages
+----------
+1. Combines the benefits of multiple inheritance types.
+2. Provides a flexible design to model complex relationships.
+
+Disadvantages
+-------------
+1. Increased complexity in the inheritance hierarchy.
+2. Ambiguity in method resolution if not handled carefully.
+
+This example demonstrates how hybrid inheritance allows for flexible and 
+hierarchical class relationships while highlighting the challenges it introduces.
