@@ -5,26 +5,25 @@
 
 
 class Book:
-
-    def __init__(self, book_id, title, author, availability):
+    def __init__(self, book_id, title, author, availability=True):
         self.book_id = book_id
         self.title = title
         self.author = author
         self.availability = availability
 
     def borrow_book(self):
-        if self.availability is True:
+        if self.availability:
             self.availability = False
-            return "This book has been borrowed successfully"
+            return "This book has been borrowed successfully."
         else:
-            return "This book is already borrowed"
+            return "Error: This book is already borrowed."
 
-    def returning_book(self):
-        if self.availability is False:
+    def return_book(self):
+        if not self.availability:
             self.availability = True
-            return "You have successfully returned the book"
+            return "You have successfully returned the book."
         else:
-            return "This book is available for borrowing"
+            return "Error: This book is not borrowed."
 
 
 class Library:
@@ -38,17 +37,30 @@ class Library:
         for book in self.books:
             if book.book_id == book_id:
                 return book
-            return None
+        return None
 
     def borrow_book(self, book_id):
         book = self.find_book(book_id)
         if book is None:
-            return "Error: Invalid Input"
-        else:
-            return book.borrow_book()
+            return "Error: Invalid book ID. No book found with the given ID."
+        return book.borrow_book()
 
     def return_book(self, book_id):
-        book = self.find_book(book)
+        book = self.find_book(book_id)
         if book is None:
-            return "Error: Invalid book ID."
-        return book.returning_book()
+            return "Error: Invalid book ID. No book found with the given ID."
+        return book.return_book()
+
+
+library = Library()
+
+library.add_books(Book(1, "Pather Panchali", "Bibhutibhushan Bandyopadhyay"))
+library.add_books(Book(2, "Shuvro", "Humayun Ahmed"))
+library.add_books(Book(3, "Devdas", "Sarat Chandra Chattopadhyay"))
+
+print(library.borrow_book(1))
+print(library.borrow_book(1))
+print(library.return_book(1))
+print(library.return_book(1))
+print(library.borrow_book(99))
+print(library.return_book(99))
