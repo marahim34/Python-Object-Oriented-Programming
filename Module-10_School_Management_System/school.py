@@ -12,8 +12,9 @@ class School:
     def add_teacher(self, subject, teacher):
         self.teachers[subject] = teacher
 
-    def student_add(self, name):
-        pass
+    def student_admission(self, student):
+        classname = student.classroom.name
+        self.classrooms[classname].add_student(student)
 
     @staticmethod
     def calculate_grade(marks):
@@ -44,3 +45,56 @@ class School:
             "F": 0.00,
         }
         return grade_map[grade]
+
+    @staticmethod
+    def value_to_grade(value):
+        if value >= 4.5 and value <= 5.00:
+            return "A+"
+        elif value >= 3.5 and value < 4.50:
+            return "A"
+        elif value >= 3.00 and value < 3.50:
+            return "A-"
+        elif value >= 2.50 and value < 3.00:
+            return "B"
+        elif value >= 2.00 and value < 2.50:
+            return "C"
+        elif value >= 1.50 and value < 2.00:
+            return "D"
+        else:
+            return "F"
+
+    def __repr__(self):
+        # Print classroom names
+        for key in self.classrooms.keys():
+            print(key)
+
+        # Print students in each classroom
+        print("Student List")
+        result = ""
+        for classroom_name, classroom in self.classrooms.items():
+            result += f"--- {classroom_name.upper()} Classroom Students\n"
+            for student in classroom.students:
+                result += f"{student.name}\n"
+        print(result)
+
+        # Print subjects in each classroom
+        subject = ""
+        for classroom_name, classroom in self.classrooms.items():
+            subject += f"--- {classroom_name.upper()} Classroom Subjects\n"
+            for sub in classroom.subjects:
+                subject += f"{sub.name}\n"
+        print(subject)
+
+        # Print student results
+        print("Students Results")
+        for classroom_name, classroom in self.classrooms.items():
+            for student in classroom.students:
+                print(f"{student.name}'s Results:")
+                if hasattr(student, "marks") and isinstance(student.marks, dict):
+                    for subject_name, marks in student.marks.items():
+                        print(
+                            f"  Subject: {subject_name}, Marks: {marks}, Grade: {student.subject_grade.get(subject_name, 'N/A')}"
+                        )
+                print(student.final_grade())  # Print GPA and grade
+
+        return ""
