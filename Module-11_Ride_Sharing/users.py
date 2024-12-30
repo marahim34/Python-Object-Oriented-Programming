@@ -35,12 +35,12 @@ class Rider(User):
     def update_location(self, current_location):
         self.current_location = current_location
 
-    def request_ride(self, ride_sharing, destination, vehicle_type):
+    def request_ride(self, ride_sharing, destination, vehicle_type, distance):
         ride_request = RideRequest(self, destination)
         ride_matching = RideMatching(ride_sharing.drivers)
-        ride = ride_matching.find_drivers(ride_request, vehicle_type)
+        ride = ride_matching.find_drivers(ride_request, vehicle_type, distance)
         self.current_ride = ride
-        print("You got a ride")
+        print("You got a ride!")
 
     def show_current_ride(self):
         print(self.current_ride)
@@ -56,5 +56,9 @@ class Driver(User):
     def display_profile(self):
         print(f"Driver Name: {self.name}")
 
-    def accept_ride(self, ride):
+    def accept_ride(self, ride, distance):
+        ride.start_ride(distance)
         ride.set_driver(self)
+
+    def reach_destination(self, ride):
+        ride.end_ride()
