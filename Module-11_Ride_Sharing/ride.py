@@ -47,16 +47,18 @@ class Ride:
             print("Ride has not started properly. Missing rider or driver.")
             return
 
-        print(f"Ending ride with fare: {self.estimated_fare}")
-        print(f"Rider's wallet before: {self.rider.wallet}")
-        print(f"Driver's wallet before: {self.driver.wallet}")
+        if self.rider.wallet < self.estimated_fare:
+            print(
+                f"Insufficient balance! You need ${self.estimated_fare - self.rider.wallet} more to complete this ride."
+            )
+            return
 
         self.end_time = datetime.now()
         self.rider.wallet -= self.estimated_fare
         self.driver.wallet += self.estimated_fare
-
-        print(f"Rider's wallet after: {self.rider.wallet}")
-        print(f"Driver's wallet after: {self.driver.wallet}")
+        print(
+            f"Ride completed! {self.rider.name}'s new wallet balance: ${self.rider.wallet}."
+        )
 
     def calculate_fare(self, distance, vehicle):
         fare_per_km = {"car": 30, "bike": 20, "cng": 25}
@@ -88,10 +90,9 @@ class RideMatching:
             elif vehicle_type == "bike":
                 vehicle = Bike("bike", "XY-521", 20)
 
-            # Create a Ride and set both rider and driver
             ride = Ride(
                 ride_request.rider.current_location, ride_request.end_location, vehicle
             )
-            ride.rider = ride_request.rider  # Set the rider
+            ride.rider = ride_request.rider
             driver.accept_ride(ride, distance)
             return ride

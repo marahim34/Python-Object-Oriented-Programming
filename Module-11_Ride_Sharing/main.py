@@ -3,7 +3,7 @@ from users import Rider, Driver
 from vehicle import Car, Bike
 
 uber_ride = RideSharing("UBER Ride")
-joe = Rider("Joe Biden", "joe@gmail.com", 12345687, "Washington DC", 50)
+joe = Rider("Joe Biden", "joe@gmail.com", 12345687, "Washington DC", 500)
 uber_ride.add_rider(joe)
 
 donald = Driver("Donald Trump", "donald@gmail.com", 12545687, "Philadelphia")
